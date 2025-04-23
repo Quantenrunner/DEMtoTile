@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: System info
+        run: |
+          echo $USER
+          df -h
+          free -m
+          lscpu
+
+      - name: Install
+        run: sudo apt install gdal-bin parallel optipng
+
+      - name: Create data directory and set ownership
+        run: |
+          sudo mkdir /mnt/data
+          sudo chown $USER:$USER /mnt/data
+
+      - name: Make scripts executable
+        run: chmod +x scripts/*.sh
