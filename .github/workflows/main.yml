@@ -37,3 +37,6 @@ jobs:
 
       - name: Download data
         run: scripts/download.sh
+
+      - name: Convert DEM to hillshade
+        run: scripts/dem2hillshade.sh
