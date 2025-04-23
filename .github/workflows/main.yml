@@ -52,3 +52,6 @@ jobs:
 
       - name: Compress tiles
         run: time scripts/compress_tiles.sh
+
+      - name: Upload archive
+        run: time scripts/upload_tiles_archive.sh
