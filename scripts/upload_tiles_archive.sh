@@ -31,18 +31,10 @@ for FILE_PATH in "$WORK_DIR"/*.tar.gz; do
 
   #silent: add -s
   RESPONSE=$(curl -w "%{speed_upload}" -X POST \
-    -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-    -H "Content-Type: multipart/related; boundary=foo_bar_baz" \
-    --data-binary @<(echo -e '--foo_bar_baz
-Content-Type: application/json; charset=UTF-8
-
-{
-  "name": "'"${FILE_NAME}"'"
-}
---foo_bar_baz
-Content-Type: '"${FILE_TYPE}"'
-'; cat "${FILE_PATH}"; echo -e '\n--foo_bar_baz--') \
-    "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart")
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -F "metadata={\"name\":\"${FILE_NAME}\"};type=application/json; charset=UTF-8" \
+  -F "file=@${FILE_PATH};type=${FILE_TYPE}" \
+  "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart")
   
   JSON=$(echo "$RESPONSE" | head -n -1)
   # Redact the "id" field
