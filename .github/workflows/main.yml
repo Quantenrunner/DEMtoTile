@@ -38,8 +38,8 @@ jobs:
       - name: Make scripts executable
         run: chmod +x scripts/*.sh
 
-      - name: Download data
-        run: time scripts/download.sh
+      - name: Download DEM
+        run: time scripts/download_dem.sh
 
       - name: Convert DEM to hillshade
         run: time scripts/dem2hillshade.sh
