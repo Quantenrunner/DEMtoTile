@@ -11,3 +11,5 @@ ls -lh "$WORK_DIR/hillshade.tif"
 
 gdal_translate -of GTiff -co BIGTIFF=YES -co TILED=YES -co COMPRESS=DEFLATE -co ZLEVEL=9 -co PREDICTOR=2 "$WORK_DIR/hillshade.tif" "$WORK_DIR/hillshade_compressed.tif"
 ls -lh "$WORK_DIR/hillshade_compressed.tif"
+
+rm "$WORK_DIR/hillshade.tif"
