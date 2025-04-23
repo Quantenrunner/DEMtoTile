@@ -127,6 +127,12 @@ while IFS= read -r line; do
     fi
     
     ((CURRENT++))
+
+    # test:
+    if [[ $CURRENT -gt 2 ]]; then
+      break
+    fi
+    
     echo "Downloading file $CURRENT of $TOTAL_FILES: $FILE_NAME ..."
     # Download the file content using Drive API with alt=media
     download_file
@@ -143,3 +149,6 @@ done < "$TMPFILE"
 
 # Remove the temporary file after downloads are complete
 rm "$TMPFILE"
+
+du -sh "$DOWNLOAD_DIR"
+ls -lh "$DOWNLOAD_DIR"
