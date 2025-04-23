@@ -50,16 +50,16 @@ jobs:
       - name: Hillshade to tiles
         run: time scripts/hillshade2tiles.sh
 
-      - name: Optimize tiles
-        run: time scripts/optimize_tiles.sh
+#      - name: Optimize tiles
+#        run: time scripts/optimize_tiles.sh
 
-      - name: Upload optipng artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: optipng
-          path: |
-            /mnt/data/optipng.log.log
-            /mnt/data/optipng_output.log
+#      - name: Upload optipng artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: optipng
+#          path: |
+#            /mnt/data/optipng.log.log
+#            /mnt/data/optipng_output.log
 
       - name: Compress tiles
         run: time scripts/compress_tiles.sh
