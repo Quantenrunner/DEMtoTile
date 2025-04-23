@@ -45,4 +45,10 @@ jobs:
         run: time scripts/dem2hillshade.sh
 
       - name: Upload hillshade
-        run: time scripts/upload.sh
+        run: time scripts/upload_hillshade.sh
+
+      - name: Hillshade to tiles
+        run: time scripts/hillshade2tiles.sh
+
+      - name: Compress tiles
+        run: time scripts/compress_tiles.sh
