@@ -28,8 +28,9 @@ for FILE_PATH in "$WORK_DIR"/*.tif; do
   # Display the MD5 checksum of the upload file
   echo -n "MD5: "
   md5sum "$FILE_PATH" | awk '{print $1}'
-  
-  RESPONSE=$(curl -s -w "%{speed_upload}" -X POST \
+
+  #silent: add -s
+  RESPONSE=$(curl -w "%{speed_upload}" -X POST \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -H "Content-Type: multipart/related; boundary=foo_bar_baz" \
     --data-binary @<(echo -e '--foo_bar_baz
