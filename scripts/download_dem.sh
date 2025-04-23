@@ -129,9 +129,9 @@ while IFS= read -r line; do
     ((CURRENT++))
 
     # test:
-    #if [[ $CURRENT -gt 2 ]]; then
-    #  break
-    #fi
+    if [[ $CURRENT -gt 2 ]]; then
+      break
+    fi
     
     echo "Downloading file $CURRENT of $TOTAL_FILES: $FILE_NAME ..."
     # Download the file content using Drive API with alt=media
