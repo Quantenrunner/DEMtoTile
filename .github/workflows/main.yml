@@ -34,3 +34,6 @@ jobs:
 
       - name: Make scripts executable
         run: chmod +x scripts/*.sh
+
+      - name: Download data
+        run: scripts/download.sh
