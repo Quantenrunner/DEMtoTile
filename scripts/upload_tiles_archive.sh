@@ -2,6 +2,16 @@
 
 WORK_DIR="/mnt/data"
 
+echo "Tiles ready..."
+echo "Wait 1 minute 1/3"
+sleep 60
+echo "Wait 1 minute 2/3"
+sleep 60
+echo "Wait 1 minute 3/3"
+sleep 60
+
+echo "Start upload!"
+
 # Get access token using the refresh token
 ACCESS_TOKEN=$(curl -s \
   --request POST \
