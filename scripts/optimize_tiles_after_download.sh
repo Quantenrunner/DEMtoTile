@@ -41,25 +41,25 @@ find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_filec {}
 
 du -sh "$TILES_DIR"
 
-find "$TILES_DIR" -name "*.png" > "$WORK_DIR/png_list.txt"
-# Start in the background, writing to the log file
-bash -c "cat \"$WORK_DIR/png_list.txt\" | parallel -j\$(nproc) --joblog \"$OPTIPNG_LOG\" \"optipng -o2 '{}' > /dev/null 2>&1\"" &
-PID_OPTIPNG=$!
+#find "$TILES_DIR" -name "*.png" > "$WORK_DIR/png_list.txt"
+## Start in the background, writing to the log file
+#bash -c "cat \"$WORK_DIR/png_list.txt\" | parallel -j\$(nproc) --joblog \"$OPTIPNG_LOG\" \"optipng -o2 '{}' > /dev/null 2>&1\"" &
+#PID_OPTIPNG=$!
 
-# Start tail and awk in a new process group (with setsid)
-# Print every 500th line
-setsid bash -c "tail -f '$OPTIPNG_LOG' | awk 'NR % 500 == 0'" &
-PID_TAIL_AWK=$!
+## Start tail and awk in a new process group (with setsid)
+## Print every 500th line
+#setsid bash -c "tail -f '$OPTIPNG_LOG' | awk 'NR % 500 == 0'" &
+#PID_TAIL_AWK=$!
 
-wait $PID_OPTIPNG
+#wait $PID_OPTIPNG
 
-sleep 5
+#sleep 5
 
-# Terminate the entire process group of tail/awk
-kill -- -$PID_TAIL_AWK
+## Terminate the entire process group of tail/awk
+#kill -- -$PID_TAIL_AWK
 
-# Wait until tail and awk have fully exited
-wait $PID_TAIL_AWK
+## Wait until tail and awk have fully exited
+#wait $PID_TAIL_AWK
 
 echo "Not PNG files:"
 find $TILES_DIR -type f -not -name "*.png"
