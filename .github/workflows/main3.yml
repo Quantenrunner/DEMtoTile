@@ -28,7 +28,7 @@ jobs:
       - name: Install
         run: |
           sudo apt update
-          sudo apt install parallel optipng jq
+          sudo apt install parallel optipng jq imagemagick
 #         sudo apt install gdal-bin parallel optipng jq
 
       - name: Create data directory and set ownership
