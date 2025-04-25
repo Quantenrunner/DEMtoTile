@@ -37,7 +37,7 @@ export -f process_file
 
 echo "Remove transparency..."
 
-find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_filec {}
+find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_file {}
 
 du -sh "$TILES_DIR"
 
