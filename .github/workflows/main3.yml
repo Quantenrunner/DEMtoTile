@@ -1,0 +1,58 @@
+name: CI3
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+#      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+#      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+#      REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+      CLIENT_ID_2: ${{ secrets.CLIENT_ID_2 }}
+      CLIENT_SECRET_2: ${{ secrets.CLIENT_SECRET_2 }}
+      REFRESH_TOKEN_2: ${{ secrets.REFRESH_TOKEN_2 }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: System info
+        run: |
+          echo $USER
+          df -h
+          free -m
+          lscpu
+
+      - name: Install
+        run: |
+          sudo apt update
+          sudo apt install parallel optipng jq
+#         sudo apt install gdal-bin parallel optipng jq
+
+      - name: Create data directory and set ownership
+        run: |
+          sudo mkdir /mnt/data
+          sudo chown $USER:$USER /mnt/data
+
+      - name: Make scripts executable
+        run: chmod +x scripts/*.sh
+
+      - name: Download hillshade
+        run: time scripts/download_tiles.sh
+
+      - name: Optimize tiles
+        run: time scripts/optimize_tiles_after_download.sh
+
+      - name: Upload optipng artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: optipng
+          path: /mnt/data/optipng.log
+
+      - name: Compress tiles
+        run: time scripts/compress_tiles_split.sh
+
+      - name: Upload archive
+        run: time scripts/upload_tiles_archive_split.sh
