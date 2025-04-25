@@ -1,6 +1,5 @@
 #!/bin/bash
 
-DEM_DIR="/mnt/data/download"
 WORK_DIR="/mnt/data"
 TILES_DIR="/mnt/data/tiles"
 
