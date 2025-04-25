@@ -39,7 +39,7 @@ jobs:
       - name: Make scripts executable
         run: chmod +x scripts/*.sh
 
-      - name: Download hillshade
+      - name: Download tiles
         run: time scripts/download_tiles.sh
 
       - name: Optimize tiles
