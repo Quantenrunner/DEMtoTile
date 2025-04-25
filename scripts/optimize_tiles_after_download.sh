@@ -26,6 +26,22 @@ echo "$(find $TILES_DIR -type f -name "*.png" | wc -l) PNG files"
 
 du -sh "$TILES_DIR"
 
+process_file() {
+    while read -r FILE; do
+        if [[ "$(magick identify -format "%[opaque]" "$FILE")" == "False" ]]; then
+            magick "$FILE" -background white -alpha remove -alpha off "$FILE"
+        fi
+    done
+}
+
+export -f process_file
+
+echo "Remove transparency..."
+
+find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_file
+
+du -sh "$TILES_DIR"
+
 find "$TILES_DIR" -name "*.png" > "$WORK_DIR/png_list.txt"
 # Start in the background, writing to the log file
 bash -c "cat \"$WORK_DIR/png_list.txt\" | parallel -j\$(nproc) --joblog \"$OPTIPNG_LOG\" \"optipng -o2 '{}' > /dev/null 2>&1\"" &
