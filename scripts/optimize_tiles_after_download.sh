@@ -27,18 +27,17 @@ echo "$(find $TILES_DIR -type f -name "*.png" | wc -l) PNG files"
 du -sh "$TILES_DIR"
 
 process_file() {
-    while read -r FILE; do
+    FILE="$1"
         if [[ "$(magick identify -format "%[opaque]" "$FILE")" == "False" ]]; then
             magick "$FILE" -background white -alpha remove -alpha off "$FILE"
         fi
-    done
 }
 
 export -f process_file
 
 echo "Remove transparency..."
 
-find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_file
+find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_filec {}
 
 du -sh "$TILES_DIR"
 
