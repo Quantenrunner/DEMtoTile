@@ -58,13 +58,13 @@ download_file() {
   status=$(head -n1 /tmp/headers.tmp | awk '{print $2}')
 
   if [[ "$status" == "401" ]]; then
-    echo "Access token expired or invalid during download, renewing token..." >&2
+    echo "Access token expired or invalid during download, renewing token..."
     renew_access_token
     speed=$(curl -s -w "%{speed_download}" -H "Authorization: Bearer ${ACCESS_TOKEN}" "$url" -o "${DOWNLOAD_DIR}/${FILE_NAME}")
   fi
 
   speed_human=$(numfmt --to=iec <<< "$speed")
-  echo "Download speed: $speed_human/s" >&2
+  echo "Download speed: $speed_human""B/s"
 }
 
 # ==== INITIAL ACCESS TOKEN RENEWAL ====
