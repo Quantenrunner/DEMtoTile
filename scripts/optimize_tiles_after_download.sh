@@ -32,7 +32,7 @@ bash -c "cat \"$WORK_DIR/png_list.txt\" | parallel -j\$(nproc) --joblog \"$OPTIP
 PID_OPTIPNG=$!
 
 # Start tail and awk in a new process group (with setsid)
-# Print every 50th line
+# Print every 500th line
 setsid bash -c "tail -f '$OPTIPNG_LOG' | awk 'NR % 500 == 0'" &
 PID_TAIL_AWK=$!
 
