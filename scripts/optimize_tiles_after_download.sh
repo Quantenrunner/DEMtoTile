@@ -6,12 +6,16 @@ OPTIPNG_LOG="$WORK_DIR/optipng.log"
 
 cd $WORK_DIR
 
-tar -xzf tiles.tar.gz -C $WORK_DIR
+ls -l $WORK_DIR
+
+tar -xzf $WORK_DIR/tiles.tar.gz -C $WORK_DIR
+
+rm $WORK_DIR/tiles.tar.gz
+
+> "$OPTIPNG_LOG"
 
 ls -l $TILES_DIR
 ls -l $WORK_DIR
-
-> "$OPTIPNG_LOG"
 
 echo "Delete aux files..."
 find $TILES_DIR -type f -name "*.png.aux.xml" -delete
