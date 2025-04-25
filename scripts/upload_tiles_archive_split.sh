@@ -40,24 +40,29 @@ for FILE_PATH in "$WORK_DIR"/*.tar.gz; do
   md5sum "$FILE_PATH" | awk '{print $1}'
 
   #silent: add -s
-  RESPONSE=$(curl -w "%{speed_upload}" -X POST \
+  RESPONSE=$(curl -w "%{speed_upload} %{http_code}" -X POST \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -F "metadata={\"name\":\"${FILE_NAME}\"};type=application/json; charset=UTF-8" \
   -F "file=@${FILE_PATH};type=${FILE_TYPE}" \
   "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart")
-  
+
   JSON=$(echo "$RESPONSE" | head -n -1)
   # Redact the "id" field
-  redacted_json=$(echo "$json" | jq '.id = "REDACTED"')
-  
-  # Extract upload speed
-  upload_speed=$(echo "$RESPONSE" | tail -n 1)
+  redacted_json=$(echo "$JSON" | jq '.id = "REDACTED"')
+
+  # Extract upload speed and HTTP code
+  upload_info=$(echo "$RESPONSE" | tail -n 1)
+  upload_speed=$(echo "$upload_info" | awk '{print $1}')
+  http_code=$(echo "$upload_info" | awk '{print $2}')
+
+  echo "HTTP code: $http_code"
 
   # Convert upload speed to human-readable format
   human_speed=$(numfmt --to=iec <<< "$upload_speed")
 
   echo "$redacted_json"
-  echo "Upload speed: $human_speed/s"
+  echo "Upload speed: $human_speed""B/s"
+
   echo "----------------------------------------"
 done
 
