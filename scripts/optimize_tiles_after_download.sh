@@ -27,18 +27,24 @@ echo "$(find $TILES_DIR -type f -name "*.png" | wc -l) PNG files"
 
 du -sh "$TILES_DIR"
 
+alpha_count=0
+no_alpha_count=0
+
 process_file() {
-    FILE="$1"
+    local FILE="$1"
+    local channels
     #if [[ "$(magick identify -format "%[opaque]" "$FILE")" == "False" ]]; then
     channels=$(identify -format "%[channels]" "$FILE")
-    echo $channels
+    #echo $channels
     
     if [[ "$channels" == *graya* || "$channels" == *srgba* ]]; then
         #magick "$FILE" -background white -alpha remove -alpha off "$FILE"
         convert "$FILE" -background white -alpha remove -alpha off "$FILE"
-        echo "alpha: $FILE"
+        #echo "alpha: $FILE"
+        echo "alpha"
     else
-        echo "not: $FILE"
+        #echo "not: $FILE"
+        echo "no_alpha"
     fi
 }
 
@@ -46,7 +52,13 @@ export -f process_file
 
 echo "Remove transparency..."
 
-find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_file {}
+results=$(find $TILES_DIR -type f -name "*.png" | parallel -j $(nproc) process_file {})
+
+alpha_count=$(echo "$results" | grep -c "^alpha$")
+no_alpha_count=$(echo "$results" | grep -c "^no_alpha$")
+
+echo "alpha: $alpha_count"
+echo "no alpha: $no_alpha_count"
 
 du -sh "$TILES_DIR"
 
