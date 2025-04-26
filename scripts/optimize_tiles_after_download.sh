@@ -8,7 +8,7 @@ cd $WORK_DIR
 
 ls -l $WORK_DIR
 
-tar -xzf $WORK_DIR/tiles_19.tar.gz -C $WORK_DIR
+tar -xzf $WORK_DIR/tiles.tar.gz -C $WORK_DIR
 
 rm $WORK_DIR/tiles.tar.gz
 rm $WORK_DIR/tiles_19.tar.gz
