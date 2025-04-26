@@ -34,6 +34,8 @@ process_file() {
             #magick "$FILE" -background white -alpha remove -alpha off "$FILE"
             convert "$FILE" -background white -alpha remove -alpha off "$FILE"
             echo "rt: $FILE"
+        else
+            echo "not: $FILE"
         fi
 }
 
