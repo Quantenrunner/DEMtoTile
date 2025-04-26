@@ -33,6 +33,7 @@ process_file() {
         if [[ "$(convert "$FILE" -format "%[opaque]" info:)" = "False" ]]; then
             #magick "$FILE" -background white -alpha remove -alpha off "$FILE"
             convert "$FILE" -background white -alpha remove -alpha off "$FILE"
+            echo "rt: $FILE"
         fi
 }
 
