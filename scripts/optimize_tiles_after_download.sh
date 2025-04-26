@@ -30,8 +30,8 @@ du -sh "$TILES_DIR"
 process_file() {
     FILE="$1"
     #if [[ "$(magick identify -format "%[opaque]" "$FILE")" == "False" ]]; then
-    channels=$(magick identify -format "%[channels]" "$FILE")
-    #echo $channels
+    channels=$(identify -format "%[channels]" "$FILE")
+    echo $channels
     
     if [[ "$channels" == *graya* ]]; then
         #magick "$FILE" -background white -alpha remove -alpha off "$FILE"
