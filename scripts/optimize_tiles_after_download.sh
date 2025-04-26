@@ -33,7 +33,7 @@ process_file() {
     channels=$(identify -format "%[channels]" "$FILE")
     echo $channels
     
-    if [[ "$channels" == *graya* ]]; then
+    if [[ "$channels" == *graya* || "$channels" == *srgba* ]]; then
         #magick "$FILE" -background white -alpha remove -alpha off "$FILE"
         convert "$FILE" -background white -alpha remove -alpha off "$FILE"
         echo "alpha: $FILE"
