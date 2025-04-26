@@ -8,9 +8,9 @@ cd $WORK_DIR
 
 ls -l $WORK_DIR
 
-tar -xzf $WORK_DIR/tiles_19.tar.gz -C $WORK_DIR
+tar -xzf $WORK_DIR/tiles.tar.gz -C $WORK_DIR
 
-rm $WORK_DIR/tiles_19.tar.gz
+rm $WORK_DIR/tiles.tar.gz
 
 > "$OPTIPNG_LOG"
 
@@ -29,7 +29,8 @@ du -sh "$TILES_DIR"
 process_file() {
     FILE="$1"
         if [[ "$(magick identify -format "%[opaque]" "$FILE")" == "False" ]]; then
-            magick "$FILE" -background white -alpha remove -alpha off "$FILE"
+            #magick "$FILE" -background white -alpha remove -alpha off "$FILE"
+            convert "$FILE" -background white -alpha remove -alpha off "$FILE"
         fi
 }
 
